@@ -10,7 +10,7 @@ import javax.swing.JFrame;
  *
  * @author ParhamMLK
  */
-public class RoomTest extends JFrame
+/*public class RoomTest extends JFrame
 {
 	public static final String sep = File.separator;
 
@@ -39,4 +39,4 @@ public class RoomTest extends JFrame
 
 	}
 
-}
+}      */

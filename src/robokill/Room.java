@@ -22,32 +22,36 @@ import javax.swing.SwingUtilities;
  *
  * @version 1.0
  */
-public class Room extends JPanel
+public class Room extends Map
 {
 
-	private Cell[][] cells;
+	private Cell[][] cells = new Cell[11][15];
 	private boolean isCleaned;
-	private Robot robot;
-	private ArrayList<Enemy> enemies = new ArrayList<>();
+	//private Robot robot;
+    private String dir;
+    private ArrayList<Box> boxes = new ArrayList<Box>();
+    private ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
+    private ArrayList<Door> doors = new ArrayList<Door>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private boolean isFin = false;
 
 	private boolean up = false, down = false, right = false, left = false;
 
 	public static final String sep = File.separator;
 
-	public Room()
+	public Room(ArrayList<Box> boxes, ArrayList<SmallBarrier> barriers, ArrayList<Enemy> enemies, ArrayList<Door> doors)
 	{
-		super(true);
+		super();
 
-		cells = new Cell[11][15];
-		for (Cell[] row : cells)
-		{
-			for (Cell cell : row)
-			{
-				cell = new Cell(null);
-			}
-		}
+        this.boxes = boxes;
+        this.barriers = barriers;
+        this.enemies = enemies;
+        this.doors = doors;
 
-		robot = new Robot(400, 300);
+        setDoubleBuffered(true);
+
+        init();
+
 
 		//WASD + Arrow Keys
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "up");
@@ -86,6 +90,18 @@ public class Room extends JPanel
 		setVisible(true);
 	}
 
+    public void init()
+    {
+        for(int i=0;i<boxes.size();i++)
+            cells[boxes.get(i).iCell()][boxes.get(i).jCell()] = new Cell(boxes.get(i), boxes.get(i).iCell(), boxes.get(i).jCell());
+        for(int i = 0; i < barriers.size(); i++)
+        {
+            int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
+            cells[x][y] = new Cell(barriers.get(i), x, y);
+        }
+
+    }
+
 	public void setCell(int i, int j, Cell c)
 	{
 		if (isValid(i, j))
@@ -95,11 +111,12 @@ public class Room extends JPanel
 	}
 
 	@Override
-	protected void paintComponent(Graphics g)
+    public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();
-		g.drawImage(background, 0, 0, 800, 600, null);
+		//g.drawImage(background, 0, 0, 800, 600, null);
+
 		for (int i = 0; i < 11; i++)
 		{
 			for (int j = 0; j < 15; j++)
@@ -111,10 +128,14 @@ public class Room extends JPanel
 					continue;
 				}
 
-				g.drawImage(c.getImage(), 10 + j * 52, 13 + i * 52, c.getImage().getWidth(null), c.getImage().getHeight(null), null);
-			}
-		}
+				g.drawImage(c.getImage(), c.getxPos(), c.getyPos(), c.getImage().getWidth(null), c.getImage().getHeight(null), null);
 
+            }
+		}
+        for(int i=0;i<doors.size();i++)
+        {
+            doors.get(i).drawDoor(g, isFin);
+        }
 		robot.move(up, down, left, right);
 
 //		System.err.println(" u:" + up + " d:" + down + " l:" + left + " r:" + right);
@@ -147,6 +168,15 @@ public class Room extends JPanel
 		repaint();
 	}
 
+    public boolean isFin()
+    {
+        return isFin;
+    }
+
+    public void setIsFin(boolean isFin)
+    {
+        this.isFin = isFin;
+    }
 	private boolean isValid(int i, int j)
 	{
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
@@ -167,26 +197,20 @@ public class Room extends JPanel
 		{
 			this.dir = dir;
 			this.d = d;
+            int a;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			switch (dir)
-			{
-				case "up":
-					up = d;
-					break;
-				case "down":
-					down = d;
-					break;
-				case "left":
-					left = d;
-					break;
-				case "right":
-					right = d;
-					break;
-			}
+            if(dir == "up")
+                up = d;
+            else if(dir == "down")
+                down = d;
+            else if(dir == "left")
+                left = d;
+            else if(dir == "right")
+                right = d;
 
 		}
 	}
