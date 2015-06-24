@@ -23,7 +23,7 @@ public class Menu extends JFrame implements ActionListener {
     public Menu() {
         super("Robokill");
 		setUndecorated(true);
-        setSize(800, 550);
+        setSize(800, 600);
         setResizable(false);
         setLocation(150, 70);
         setLayout(null);

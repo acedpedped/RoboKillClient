@@ -22,7 +22,7 @@ public class Robokill extends JFrame
 	{
 		setUndecorated(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800, 550);
+		setSize(800, 600);
 		setLocation(150, 70);
 		setResizable(false);
 		setLayout(null);
@@ -36,7 +36,7 @@ public class Robokill extends JFrame
 	{
 		super.paint(g);
 		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
-		g.drawImage(img, 0, 0, 800, 550, null);
+		g.drawImage(img, 0, 0, 800, 600, null);
 		loading(g);
 
 	}
@@ -44,19 +44,22 @@ public class Robokill extends JFrame
 	public void loading(Graphics g)
 	{
 		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-		for (int i = 0; i <= 663; i += 4)
+		for (int i = 0; i <= 663; i++)
 		{
-			g.drawImage(img, 69, 481, i, 17, null);
-			try
-			{
-				Thread.sleep(10);
-			}
-			catch (InterruptedException e)
-			{
-			}
+			g.drawImage(img, 69, 526, i, 17, null);
+//			try
+//			{
+//				Thread.sleep(2);
+//			}
+//			catch (InterruptedException e)
+//			{
+//			}
 		}
 		dispose();
-		new Menu();
+		
+		new RoomTest();
+		
+//		new Menu();
 	}
 
 	public static void main(String args[])
