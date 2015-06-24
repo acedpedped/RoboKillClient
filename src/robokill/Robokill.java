@@ -6,11 +6,13 @@ import java.awt.*;
 import java.io.File;
 
 /**
- * Created with IntelliJ IDEA. User: pedram Date: 6/23/15 Time: 8:31 AM To
- * change this template use File | Settings | File Templates.
+ * Class Robokill. start point of program.
+ * 
+ * @author pedram
+ * @author ParhamMLK
+ * 
+ * @version 1.0
  */
-
-
 public class Robokill extends JFrame
 {
 
@@ -33,7 +35,7 @@ public class Robokill extends JFrame
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		Image img = new ImageIcon(getClass().getResource("resourses" + sep + "Image" + sep + "image 3.jpg")).getImage();
+		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
 		g.drawImage(img, 0, 0, 800, 550, null);
 		loading(g);
 
@@ -41,10 +43,10 @@ public class Robokill extends JFrame
 
 	public void loading(Graphics g)
 	{
-		Image img1 = new ImageIcon(getClass().getResource("resourses" + sep + "Image" + sep + "image 1.png")).getImage();
+		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
 		for (int i = 0; i <= 663; i += 4)
 		{
-			g.drawImage(img1, 69, 481, i, 17, null);
+			g.drawImage(img, 69, 481, i, 17, null);
 			try
 			{
 				Thread.sleep(10);

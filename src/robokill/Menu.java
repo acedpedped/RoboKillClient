@@ -29,7 +29,7 @@ public class Menu extends JFrame implements ActionListener {
         setLayout(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        button = new ImageIcon(getClass().getResource("resourses" + sep + "Image" + sep + "image 850.png"));
+        button = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 850.png");
 
         start = new JButton(button);
         start.setBounds(280, 200, 130, 40);
@@ -59,7 +59,7 @@ public class Menu extends JFrame implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
 		
-        Image img = new ImageIcon(getClass().getResource("resourses" + sep + "Image" + sep + "image 700.jpg")).getImage();
+        Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 700.jpg").getImage();
         g.drawImage(img, 0, 0, 800, 550, null);
         g.drawImage(button.getImage(), 250, 250, 130, 30, null);
         /*credits.repaint();

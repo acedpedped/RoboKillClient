@@ -1,14 +1,12 @@
 /*
  * in the name of God
  */
+package robokill;
 
 /**
  *
  * @author ParhamMLK
  */
-
-package robokill;
-
 public class Blaster extends Weapon
 {
 
