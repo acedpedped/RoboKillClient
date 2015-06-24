@@ -1,9 +1,7 @@
-
-import robokill.Enemy;
-
 /*
  * in the name of God
  */
+package robokill;
 
 /**
  *
