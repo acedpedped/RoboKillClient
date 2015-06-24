@@ -1,4 +1,6 @@
 
+package robokill;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -7,6 +9,8 @@ import java.io.File;
  * Created with IntelliJ IDEA. User: pedram Date: 6/23/15 Time: 8:31 AM To
  * change this template use File | Settings | File Templates.
  */
+
+
 public class Robokill extends JFrame
 {
 
@@ -14,7 +18,7 @@ public class Robokill extends JFrame
 
 	public Robokill()
 	{
-		setTitle("Robokill");
+		setUndecorated(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 550);
 		setLocation(150, 70);

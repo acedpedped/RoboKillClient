@@ -1,3 +1,5 @@
+package robokill;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,11 +7,12 @@ import java.awt.event.*;
 import java.io.File;
 
 /**
- * Created with IntelliJ IDEA.
- * User: pedram
- * Date: 6/23/15
- * Time: 7:49 PM
- * To change this template use File | Settings | File Templates.
+ * Menu Class which appears at the beginning.
+ * 
+ * @author ParhamMLK
+ * @author pedram
+ * 
+ * @version 1.0
  */
 public class Menu extends JFrame implements ActionListener {
     private JButton credits, start, options;
@@ -19,6 +22,7 @@ public class Menu extends JFrame implements ActionListener {
 	
     public Menu() {
         super("Robokill");
+		setUndecorated(true);
         setSize(800, 550);
         setResizable(false);
         setLocation(150, 70);
