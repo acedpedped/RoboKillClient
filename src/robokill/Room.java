@@ -20,6 +20,7 @@ public class Room extends JPanel
 	private Cell[][] cells;
 	private boolean isCleaned;
 	private int robX, robY;
+    private int i;
 	private Robot rob;
 
 	public static final String sep = File.separator;
@@ -80,19 +81,20 @@ public class Room extends JPanel
 				//g.drawImage(rob.getBody(), robX, robY, null);
 				//g.drawImage(rob.getHead(), robX, robY, null);
 
-				rob.moveForward(g, i * 90);
-
-				try
-				{
-					Thread.sleep(200);
-				}
-				catch (InterruptedException e)
-				{
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				}
-				repaint();
 			}
 		}
+
+
+
+        try
+        {
+            Thread.sleep(200);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        repaint();
 
 	}
 

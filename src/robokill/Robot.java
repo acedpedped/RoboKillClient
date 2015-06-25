@@ -25,6 +25,9 @@ public class Robot
     private double direction = 90;
     private ArrayList<Weapon> guns = new ArrayList<Weapon>();
     private ArrayList<Image> moveUp = new ArrayList<Image>();
+    private ArrayList<Image> moveDown = new ArrayList<Image>();
+    private ArrayList<Image> moveRight = new ArrayList<Image>();
+    private ArrayList<Image> moveLeft = new ArrayList<Image>();
     private Image img;
     private Image head, body;
     private double degree;
@@ -39,6 +42,12 @@ public class Robot
         {
             img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + ".png").getImage();
             moveUp.add(img);
+            img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "1.png").getImage();
+            moveRight.add(img);
+            img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "2.png").getImage();
+            moveDown.add(img);
+            img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "3.png").getImage();
+            moveLeft.add(img);
 
         }
         head = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 286.png").getImage();
@@ -177,16 +186,15 @@ public class Robot
         double difference = degDif(dir, direction);
         direction = dir;
         update(dir);
-        if(difference == 0)
-        {
+        if(dir == 0)
+            g.drawImage(moveRight.get(curImg), xPos, yPos, null);
+        else if(dir == 90)
             g.drawImage(moveUp.get(curImg), xPos, yPos, null);
-            curImg = (curImg + 1) % 4;
-        }
-        else
-        {
-           Graphics2D g2d = (Graphics2D)g;
-            g2d.rotate(difference);
-        }
+        else if(dir == 180)
+            g.drawImage(moveDown.get(curImg), xPos, yPos, null);
+        else if(dir == 270)
+            g.drawImage(moveLeft.get(curImg), xPos, yPos, null);
+        curImg = (curImg + 1) % 4;
         g.drawImage(head, xPos, yPos, null);
 
 
