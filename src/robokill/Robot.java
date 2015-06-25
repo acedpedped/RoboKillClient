@@ -26,13 +26,15 @@ public class Robot
     private ArrayList<Weapon> guns = new ArrayList<Weapon>();
     private ArrayList<Image> moveUp = new ArrayList<Image>();
     private Image img;
-    private Image head;
+    private Image head, body;
     private double degree;
     String indexes[] = new String[]{"413", "653", "413", "102"};
     public static final String sep = File.separator;
 	
-	public Robot()
+	public Robot(int x, int y)
     {
+        xPos = x;
+        yPos = y;
         for(int i=0;i<4;i++)
         {
             img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + ".png").getImage();
@@ -40,8 +42,20 @@ public class Robot
 
         }
         head = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 286.png").getImage();
+        body = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 413.png").getImage();
+
+
     }
 
+    public Image getHead()
+    {
+        return head;
+    }
+
+    public Image getBody()
+    {
+        return body;
+    }
 	/**
 	 * Get the value of xPos
 	 *
@@ -133,6 +147,26 @@ public class Robot
     {
         this.degree = degree;
     }
+    public void update(double dir)
+    {
+        if(dir == 0)
+        {
+            xPos += 7;
+        }
+        else if(dir == 90)
+        {
+            yPos -= 7;
+        }
+        else if(dir == 180)
+        {
+            xPos -= 7;
+        }
+        else
+        {
+            yPos += 7;
+        }
+    }
+
     /**
      * moves the robot, forward
      *
@@ -142,6 +176,7 @@ public class Robot
     {
         double difference = degDif(dir, direction);
         direction = dir;
+        update(dir);
         if(difference == 0)
         {
             g.drawImage(moveUp.get(curImg), xPos, yPos, null);

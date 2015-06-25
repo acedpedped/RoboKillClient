@@ -20,22 +20,34 @@ public class Room extends JPanel
 {
 	private Cell[][] cells;
 	private boolean isCleaned;
+    private int robX, robY;
+    private Robot rob;
+    private int i;
 
 	public static final String sep = File.separator;
 
 	public Room()
 	{
 		super(true);
+
+        setDoubleBuffered(true);
 		
 		cells = new Cell[11][15];
 		for(Cell[] row : cells)
 			for(Cell cell : row)
 				cell = new Cell(null);
-		
+
+        rob = new Robot(500, 500);
+        setRob();
 		isCleaned = false;		
 		setVisible(true);
 	}
-	
+
+    public void setRob()
+    {
+        robX = rob.getxPos();
+        robY = rob.getyPos();
+    }
 	public void setCell(int i, int j, Cell c)
 	{
 		if(isValid(i, j))
@@ -48,6 +60,7 @@ public class Room extends JPanel
 		super.paintComponent(g);
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();		
 		g.drawImage(background, 0, 0, 800, 600, null);
+        i++;
 		
 		for(int i=0; i<11; i++)
 			for(int j=0; j<15; j++)
@@ -58,8 +71,16 @@ public class Room extends JPanel
 					continue;
 				
 				g.drawImage(c.getImage(), 10+i*52, 13+j*52, c.getImage().getHeight(null), c.getImage().getWidth(null), null);
-				
-			}
+				//g.drawImage(rob.getBody(), robX, robY, null);
+                //g.drawImage(rob.getHead(), robX, robY, null);
+                    rob.moveForward(g, i*90);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    repaint();
+                }
 		
 	}
 
