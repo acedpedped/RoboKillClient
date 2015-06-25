@@ -46,19 +46,18 @@ public class Robokill extends JFrame
 		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
 		for (int i = 0; i <= 663; i++)
 		{
-			g.drawImage(img, 69, 526, i, 17, null);
-//			try
-//			{
-//				Thread.sleep(2);
-//			}
-//			catch (InterruptedException e)
-//			{
-//			}
+			g.drawImage(img, 70, 526, i, 16, null);
+			try
+			{
+				Thread.sleep(2);
+			}
+			catch (InterruptedException e)
+			{
+			}
 		}
 		dispose();
-		
+
 		new RoomTest();
-		
 //		new Menu();
 	}
 

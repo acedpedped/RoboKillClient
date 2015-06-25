@@ -24,8 +24,14 @@ public class RoomTest extends JFrame
 		setVisible(true);
 		
 		Room r = new Room();
-		Cell c = new Cell(new Barrier());
-		r.setCell(4, 5, c);
+		Cell c = new Cell(new SmallBarrier(0));
+		r.setCell(2, 8, c);
+		
+		c = new Cell(new BigBarrier(1));
+		r.setCell(3, 5, c);
+
+		c = new Cell(new Box(2));
+		r.setCell(8, 8, c);
 		
 		add(r);
 
