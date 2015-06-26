@@ -221,7 +221,11 @@ public class Robot
         Graphics2D g2d = (Graphics2D)g;
         double difference = curDeg - headDeg;
         headDeg = curDeg;
-        g2d.rotate(Math.toRadians(difference));
+        BufferedImage bi = new BufferedImage(head.getWidth(null), head.getHeight(null), BufferedImage.TYPE_3BYTE_BGR);
+        Graphics2D g2 = (Graphics2D)bi.getGraphics();
+        g2d.rotate(Math.toRadians(difference), head.getWidth(null) / 2, head.getHeight(null) / 2);
+        g2.drawImage(head, xPos, yPos, null);
+        g.drawImage(bi, xPos, yPos, null);
     }
 
 }
