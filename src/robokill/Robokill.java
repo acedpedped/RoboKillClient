@@ -20,12 +20,12 @@ public class Robokill extends JFrame
 
 	public Robokill()
 	{
-		setUndecorated(true);
+//		setUndecorated(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setLocation(150, 70);
 		setResizable(false);
-		setLayout(null);
+//		setLayout(null);
 
 		setVisible(true);
 
@@ -47,13 +47,13 @@ public class Robokill extends JFrame
 		for (int i = 0; i <= 663; i++)
 		{
 			g.drawImage(img, 70, 526, i, 16, null);
-			try
-			{
-				Thread.sleep(2);
-			}
-			catch (InterruptedException e)
-			{
-			}
+//			try
+//			{
+//				Thread.sleep(2);
+//			}
+//			catch (InterruptedException e)
+//			{
+//			}
 		}
 		dispose();
 

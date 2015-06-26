@@ -9,5 +9,10 @@ package robokill;
  */
 public class SmallEnemy extends Enemy
 {
+
+	public SmallEnemy()
+	{
+	}
+	
 	
 }

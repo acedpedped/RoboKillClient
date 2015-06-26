@@ -3,6 +3,7 @@ package robokill;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -20,8 +21,9 @@ public class Room extends JPanel
 	private Cell[][] cells;
 	private boolean isCleaned;
 	private int robX, robY;
-    private int i;
+	private int i;
 	private Robot rob;
+	private ArrayList<Enemy> enemies = new  ArrayList<>();
 
 	public static final String sep = File.separator;
 
@@ -44,6 +46,15 @@ public class Room extends JPanel
 		setRob();
 		isCleaned = false;
 		setVisible(true);
+		
+//		while(true)
+//		{
+//			for(Enemy e : enemies)
+//				e.move();
+//			
+//			repaint();
+//		}
+		
 	}
 
 	public void setRob()
@@ -84,23 +95,33 @@ public class Room extends JPanel
 			}
 		}
 
-
-
-        try
-        {
-            Thread.sleep(200);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        repaint();
+		for(Enemy e : enemies)
+		{
+			e.move();
+			g.drawImage(e.getImage(), e.getyPos(), e.getxPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
+		}
+		
+		try
+		{
+			Thread.sleep(50);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+		repaint();
 
 	}
 
 	private boolean isValid(int i, int j)
 	{
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
+	}
+
+
+	void addEnemy(Enemy enemy)
+	{
+		enemies.add(enemy);
 	}
 
 }

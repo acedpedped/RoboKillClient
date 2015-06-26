@@ -16,7 +16,7 @@ public class RoomTest extends JFrame
 
 	public RoomTest()
 	{
-		setUndecorated(true);
+//		setUndecorated(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setLocation(150, 70);
@@ -32,6 +32,8 @@ public class RoomTest extends JFrame
 
 		c = new Cell(new Box(2));
 		r.setCell(8, 8, c);
+		
+		r.addEnemy(new SmallEnemy());
 		
 		add(r);
 
