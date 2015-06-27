@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class BigBarrier extends Object
 {
 	public static final String sep = File.separator;
-	private static final String imgs[] = {"105", "268", "311", "312", "550", "579", "585",};
+	private static final String imgs[] = {"105", "268", "311", "312", "550", "579", "585", "504"};
 
 	public BigBarrier(int i)
 	{
