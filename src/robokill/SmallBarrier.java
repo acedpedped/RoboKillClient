@@ -18,9 +18,9 @@ public class SmallBarrier extends Object
 
 	public static final String sep = File.separator;
 
-	public SmallBarrier(int i)
+	public SmallBarrier(int index, int i, int j)
 	{
-		super(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + imgs[i%imgs.length] + ".png").getImage());
+		super(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + imgs[index%imgs.length] + ".png").getImage(), i, j);
 	}
 
 

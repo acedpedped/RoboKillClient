@@ -15,10 +15,11 @@ public class BigBarrier extends Object
 {
 	public static final String sep = File.separator;
 	private static final String imgs[] = {"105", "268", "311", "312", "550", "579", "585", "504"};
+    private int i, j;
 
-	public BigBarrier(int i)
+	public BigBarrier(int index, int i, int j)
 	{
-		super(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + imgs[i%imgs.length] + ".png").getImage());
+		super(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + imgs[index%imgs.length] + ".png").getImage(), i, j);
 	}
 
 

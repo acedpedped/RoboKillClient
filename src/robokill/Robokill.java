@@ -13,56 +13,83 @@ import java.io.File;
  * 
  * @version 1.0
  */
-public class Robokill extends JFrame
+public class Robokill
 {
+    public static JFrame frame = new JFrame();
 
 	public static final String sep = File.separator;
 
+    public static MainMenu mainMenu;
+    private JPanel panel;
+
+    public boolean voiceOn = true;
+
 	public Robokill()
 	{
-//		setUndecorated(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800, 600);
-		setLocation(150, 70);
-		setResizable(false);
-//		setLayout(null);
+		//setUndecorated(true);
+        panel = new SetBack();
+        frame.setLayout(new CardLayout());
+//        frame.setLayout(new CardLayout());
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		frame.setSize(800, 600);
+		frame.setLocation(150, 70);
+	    frame.setResizable(false);
+		//frame.setLayout(null);
 
-		setVisible(true);
 
-	}
-
-	@Override
-	public void paint(Graphics g)
-	{
-		super.paint(g);
-		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
-		g.drawImage(img, 0, 0, 800, 600, null);
-		loading(g);
+        frame.getContentPane().add(panel);
+		frame.setVisible(true);
 
 	}
 
-	public void loading(Graphics g)
-	{
-		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-		for (int i = 0; i <= 663; i++)
-		{
-			g.drawImage(img, 70, 526, i, 16, null);
-			try
-			{
-				Thread.sleep(2);
-			}
-			catch (InterruptedException e)
-			{
-			}
-		}
-		dispose();
 
-		new RoomTest();
-//		new Menu();
-	}
 
 	public static void main(String args[])
 	{
-		new Robokill();
+        new Robokill();
 	}
+    private class SetBack extends JPanel
+    {
+        public SetBack()
+        {
+            setSize(800, 600);
+            setVisible(true);
+        }
+        @Override
+        public void paintComponent(Graphics g)
+        {
+            super.paintComponent(g);
+            Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
+            g.drawImage(img, 0, 0, null);
+            loading(g);
+        }
+
+
+        public void loading(Graphics g)
+        {
+            /*Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
+            for (int i = 0; i <= 663; i+=3)
+            {
+                g.drawImage(img, 70, 526, i, 16, null);
+                //repaint();
+                try
+                {
+                    Thread.sleep(20);
+                }
+                catch (InterruptedException e)
+                {
+                }
+            } */
+            //dispose();
+            //new RoomTest();
+            frame.remove(panel);
+            mainMenu = new MainMenu();
+            frame.add(mainMenu);
+
+        }
+    }
+
+
+
+
 }
