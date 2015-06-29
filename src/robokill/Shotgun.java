@@ -9,13 +9,12 @@ import java.awt.*;
  *
  * @author ParhamMLK
  */
-public class Shotgun extends Weapon
+public abstract class Shotgun extends Weapon
 {
-    private Image img;
 
-	public Shotgun(double fireRate, int requiredLevel, double damage, int cost, int type)
+	public Shotgun(int delay, int requiredLevel, int damage, int cost, Image img, Room room)
 	{
-		super(fireRate, requiredLevel, damage, cost, type);
+		super(delay, requiredLevel, damage, cost, img, room);
 	}
 	
 	

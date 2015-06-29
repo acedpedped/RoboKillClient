@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.AbstractAction;
@@ -28,15 +30,30 @@ public class Room extends JPanel
 	private Cell[][] cells;
 	private boolean isCleaned;
 	private Robot robot;
-	private ArrayList<Enemy> enemies = new ArrayList<>();
 
-	private boolean up = false, down = false, right = false, left = false;
+	public Robot getRobot()
+	{
+		return robot;
+	}
+
+	public void setRobot(Robot robot)
+	{
+		this.robot = robot;
+	}
+	private ArrayList<Enemy> enemies;
+	private final ArrayList<Bullet> bullets;
+	private ArrayList<Thread> threads;
+
+	private boolean up = false, down = false, right = false, left = false, fire = false;
 
 	public static final String sep = File.separator;
 
 	public Room()
 	{
 		super(true);
+		this.threads = new ArrayList<>();
+		this.enemies = new ArrayList<>();
+		this.bullets = new ArrayList<>();
 
 		cells = new Cell[11][15];
 		for (Cell[] row : cells)
@@ -47,7 +64,6 @@ public class Room extends JPanel
 			}
 		}
 
-		robot = new Robot(400, 300);
 
 		//WASD + Arrow Keys
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "up");
@@ -82,8 +98,39 @@ public class Room extends JPanel
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released RIGHT"), "nright");
 		getActionMap().put("nright", new MoveAction("right", false));
 
+		addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+
+				for (Weapon w : robot.getGuns())
+				{
+					w.begin();
+				}
+//				setFire(true);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e)
+			{
+				for (Weapon w : robot.getGuns())
+				{
+					w.terminate();
+				}
+//				setFire(false);
+			}
+
+		});
+
 		isCleaned = false;
 		setVisible(true);
+		init();
+	}
+
+	void setFire(boolean b)
+	{
+		fire = b;
 	}
 
 	public void setCell(int i, int j, Cell c)
@@ -115,19 +162,31 @@ public class Room extends JPanel
 			}
 		}
 
+//		Image iii = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 108.png").getImage();
+//		g.drawImage(iii, 111, 111, iii.getWidth(null), iii.getHeight(null), null);
 		robot.move(up, down, left, right);
 
 //		System.err.println(" u:" + up + " d:" + down + " l:" + left + " r:" + right);
-		
-		g.drawImage(robot.getBody(), robot.getxPos()-robot.getBody().getWidth(null)/2, robot.getyPos()-robot.getBody().getHeight(null)/2, robot.getBody().getWidth(null), robot.getBody().getHeight(null), null);
-		
-		System.err.println(robot.getxPos() + " " + robot.getyPos());
-		
+		g.drawImage(robot.getBody(), robot.getxPos() - robot.getBody().getWidth(null) / 2, robot.getyPos() - robot.getBody().getHeight(null) / 2, robot.getBody().getWidth(null), robot.getBody().getHeight(null), null);
+
+//		System.err.println(robot.getxPos() + " " + robot.getyPos());
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		SwingUtilities.convertPointFromScreen(p, this);
-		
+
 		Image head = robot.getHead(p);
-		g.drawImage(head, robot.getxPos()-head.getWidth(null)/2, robot.getyPos()-head.getHeight(null)/2, head.getWidth(null), head.getHeight(null), null);
+		g.drawImage(head, robot.getxPos() - head.getWidth(null) / 2, robot.getyPos() - head.getHeight(null) / 2, head.getWidth(null), head.getHeight(null), null);
+
+//		System.err.println(bullets.size());
+		synchronized (bullets)
+		{
+			for (Bullet b : bullets)
+			{
+				//bekesh
+				Image bul = ImageTool.rotate(b.getImg(), b.getAngle());
+				g.drawImage(bul, b.getX() - bul.getWidth(null) / 2, b.getY() - bul.getHeight(null) / 2, bul.getWidth(null), bul.getHeight(null), null);
+				b.move();
+			}
+		}
 
 		for (Enemy e : enemies)
 		{
@@ -155,6 +214,29 @@ public class Room extends JPanel
 	void addEnemy(Enemy enemy)
 	{
 		enemies.add(enemy);
+	}
+
+	void addBullet(Bullet bullet)
+	{
+		synchronized (bullets)
+		{
+			bullets.add(bullet);
+		}
+	}
+
+	private void init()
+	{
+		robot = new Robot(400, 300);
+		robot.addGun(new LightBlaster(this));
+
+		for (Weapon w : robot.getGuns())
+		{
+			threads.add(new Thread(w));
+		}
+		for (Thread t : threads)
+		{
+			t.start();
+		}
 	}
 
 	private class MoveAction extends AbstractAction
@@ -187,8 +269,11 @@ public class Room extends JPanel
 					right = d;
 					break;
 			}
+			
 
 		}
 	}
+	
+	
 
 }

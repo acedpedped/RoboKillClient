@@ -2,7 +2,6 @@ package robokill;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -24,7 +23,22 @@ public class Robot extends JPanel
 	private int curImg;
 	private double headDeg = 90;
 	private double direction = 90;
-	private ArrayList<Weapon> guns = new ArrayList<Weapon>();
+	private ArrayList<Weapon> guns = new ArrayList<>();
+
+	public ArrayList<Weapon> getGuns()
+	{
+		return guns;
+	}
+
+	public void setGuns(ArrayList<Weapon> guns)
+	{
+		this.guns = guns;
+	}
+	
+	public void addGun(Weapon w)
+	{
+		guns.add(w);
+	}
 
 	private Image body;
 	private static Image head;
@@ -85,6 +99,7 @@ public class Robot extends JPanel
 		dif.x -= xPos;
 		dif.y -= yPos;
 		
+//		System.err.println(dif.x + " " + dif.y);
 		if(dif.x == 0 && dif.y == 0)
 		{
 			return tmphead;
@@ -105,23 +120,9 @@ public class Robot extends JPanel
 		{
 			tmphead = ImageTool.rotate(head, 90);
 		}
-		else if(dif.x > 0 && dif.y > 0)
+		else// if(dif.x > 0 && dif.y > 0)
 		{
-			double theta = 180.0 / Math.PI * Math.atan2(-dif.x, dif.y);
-			tmphead = ImageTool.rotate(head, theta);
-		}
-		else if(dif.x > 0 && dif.y < 0)
-		{
-			double theta = 180.0 / Math.PI * Math.atan2(-dif.x, dif.y);
-			tmphead = ImageTool.rotate(head, theta);
-		}
-		else if(dif.x < 0 && dif.y > 0)
-		{
-			double theta = 180.0 / Math.PI * Math.atan2(-dif.x, dif.y);
-			tmphead = ImageTool.rotate(head, theta);
-		}
-		else if(dif.x < 0 && dif.y < 0)
-		{
+			
 			double theta = 180.0 / Math.PI * Math.atan2(-dif.x, dif.y);
 			tmphead = ImageTool.rotate(head, theta);
 		}

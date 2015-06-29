@@ -1,63 +1,72 @@
-
 /**
  * Class Weapon.
- * 
+ *
  * @author ParhamMLK
  * @author pedram
  * @version 1.0
  */
-
 package robokill;
 
-public class Weapon
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
+
+public abstract class Weapon implements Runnable
 {
-	private double fireRate;
+
+	private int delay;
 	private int requiredLevel;
-	private double damage;
+	private int damage;
 	private int cost;
-	private int type;
-	
-	private static String[] typeNames = {"Light", "Medium", "Heavy"};
-	private static double[] typeCoeff = {1, 1.5, 2};
-	
-	public Weapon(double fireRate, int requiredLevel, double damage, int cost, int type)
+	private Image img;
+	private Room room;
+	private volatile boolean running = false;
+
+	public void terminate()
 	{
-		this.fireRate = fireRate;
+		running = false;
+	}
+
+	public void begin()
+	{
+		running = true;
+	}
+
+	public Room getRoom()
+	{
+		return room;
+	}
+
+	public void setRoom(Room room)
+	{
+		this.room = room;
+	}
+
+	public Weapon(int delay, int requiredLevel, int damage, int cost, Image img, Room room)
+	{
+		this.delay = delay;
 		this.requiredLevel = requiredLevel;
 		this.damage = damage;
 		this.cost = cost;
-		this.type = type;
-	}	
+		this.img = img;
+		this.room = room;
 
-	public static String[] getTypeNames()
-	{
-		return typeNames;
 	}
 
-	public static void setTypeNames(String[] aTypeNames)
+	public abstract Image getFireImage();
+
+	public double getDelay()
 	{
-		typeNames = aTypeNames;
+		return delay;
 	}
 
-	public static double[] getTypeCoeff()
+	public void setDelay(int delay)
 	{
-		return typeCoeff;
-	}
-
-	public static void setTypeCoeff(double[] aTypeCoeff)
-	{
-		typeCoeff = aTypeCoeff;
-	}
-	
-
-	public double getFireRate()
-	{
-		return fireRate;
-	}
-
-	public void setFireRate(double fireRate)
-	{
-		this.fireRate = fireRate;
+		this.delay = delay;
 	}
 
 	public int getRequiredLevel()
@@ -70,12 +79,12 @@ public class Weapon
 		this.requiredLevel = requiredLevel;
 	}
 
-	public double getDamage()
+	public int getDamage()
 	{
 		return damage;
 	}
 
-	public void setDamage(double damage)
+	public void setDamage(int damage)
 	{
 		this.damage = damage;
 	}
@@ -90,14 +99,30 @@ public class Weapon
 		this.cost = cost;
 	}
 
-	public int getType()
+	@Override
+	public void run()
 	{
-		return type;
+		while (true)
+		{
+			if (!running)
+			{
+				continue;
+			}
+
+			try
+			{
+				Point dif = MouseInfo.getPointerInfo().getLocation();
+				SwingUtilities.convertPointFromScreen(dif, room);
+//				System.err.println(dif);
+				addBullet(dif);
+				Thread.sleep(delay);
+			}
+			catch (InterruptedException ex)
+			{
+				Logger.getLogger(Weapon.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 	}
 
-	public void setType(int type)
-	{
-		this.type = type;
-	}
-	
+	public abstract void addBullet(Point dif);
 }

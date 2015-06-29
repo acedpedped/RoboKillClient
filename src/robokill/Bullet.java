@@ -1,16 +1,95 @@
 package robokill;
 
+import java.awt.Image;
+
 /**
- * Created with IntelliJ IDEA.
- * User: pedram
- * Date: 6/26/15
- * Time: 6:01 AM
- * To change this template use File | Settings | File Templates.
+ * 
+ * @author ParhamMLK
+ * @author pedram
+ * 
+ * @version 1.0
  */
-public class Bullet {
+public class Bullet
+{
+	private int damage;
+	private int x;
+	private int y;
+	private double angle;
+	private Image img;
+	
+	public Bullet(int damage, int x, int y, double angle, Image img)
+	{
+		this.damage = damage;
+		this.x = x;
+		this.y = y;
+		this.angle = angle;
+		this.img = img;
+	}
 
-    public Bullet(double direction, int damage)
-    {
+	public int getDamage()
+	{
+		return damage;
+	}
 
-    }
+	public void setDamage(int damage)
+	{
+		this.damage = damage;
+	}
+
+	public int getX()
+	{
+		return x;
+	}
+
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+
+	public int getY()
+	{
+		return y;
+	}
+
+	public void setY(int y)
+	{
+		this.y = y;
+	}
+
+	public double getAngle()
+	{
+		return angle;
+	}
+
+	public void setAngle(double angle)
+	{
+		this.angle = angle;
+	}
+
+	public Image getImg()
+	{
+		return img;
+	}
+
+	public void setImg(Image img)
+	{
+		this.img = img;
+	}
+
+	void move()
+	{		
+		double sin = Math.sin(Math.toRadians(angle));
+//		System.err.println(sin);
+//		System.err.println("" + angle + " : " + Math.sin(angle));
+		double cos = Math.cos(Math.toRadians(angle));
+		
+		double newx = x - sin*5;
+		double newy = y + cos*5;
+		setX((int)newx);
+		setY((int)newy);
+	}
+	
+	
+	
+
 }

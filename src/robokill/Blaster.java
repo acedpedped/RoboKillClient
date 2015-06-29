@@ -3,17 +3,21 @@
  */
 package robokill;
 
+import java.awt.Graphics;
+import java.awt.Image;
+
 /**
  *
  * @author ParhamMLK
  */
-public class Blaster extends Weapon
+public abstract class Blaster extends Weapon
 {
 
-	public Blaster(double fireRate, int requiredLevel, double damage, int cost, int type)
+	public Blaster(int delay, int requiredLevel, int damage, int cost, Image img, Room room)
 	{
-		super(fireRate, requiredLevel, damage, cost, type);
+		super(delay, requiredLevel, damage, cost, img, room);
 	}
 	
+
 	
 }
