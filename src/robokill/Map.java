@@ -242,5 +242,47 @@ public class Map extends JPanel{
 
         ////////////10///////////////
 
+        barriers.add(new SmallBarrier(1,4, 10));
+        barriers.add(new SmallBarrier(1,5, 11));
+        barriers.add(new SmallBarrier(2,4, 8));
+        barriers.add(new SmallBarrier(3,5, 8));
+        barriers.add(new SmallBarrier(3,6, 9));
+        barriers.add(new SmallBarrier(2,7, 3));
+        boxes.add(new Box(0,4,12));
+        boxes.add(new Box(0,4,9));
+        boxes.add(new Box(3,7,11));
+        boxes.add(new Box(3,7,10));
+        boxes.add(new Box(1,7,1));
+        boxes.add(new Box(2,6,3));
+        boxes.add(new Box(2,8,6));
+        boxes.add(new Box(3,3,9));
+        boxes.add(new Box(2,2,7));
+        boxes.add(new Box(1,5,5));
+        doors.add(new Door(false, false, false, true, 9, 10));
+        rooms.add(new Room(boxes, barriers, enemies, doors));
+        boxes.clear(); doors.clear(); barriers.clear();
+
+
+        barriers.add(new SmallBarrier(1,4, 10));
+        barriers.add(new SmallBarrier(1,5, 11));
+        barriers.add(new SmallBarrier(2,4, 8));
+        barriers.add(new SmallBarrier(3,5, 8));
+        barriers.add(new SmallBarrier(3,6, 9));
+        barriers.add(new SmallBarrier(2,7, 3));
+        boxes.add(new Box(0,4,12));
+        boxes.add(new Box(0,4,9));
+        boxes.add(new Box(3,7,11));
+        boxes.add(new Box(3,7,10));
+        boxes.add(new Box(1,7,1));
+        boxes.add(new Box(2,6,3));
+        boxes.add(new Box(2,8,6));
+        boxes.add(new Box(3,3,9));
+        boxes.add(new Box(2,2,7));
+        boxes.add(new Box(1,5,5));
+        doors.add(new Door(false, false, true, false, 9,  11));
+        rooms.add(new Room(boxes, barriers, enemies, doors));
+        boxes.clear(); doors.clear(); barriers.clear();
+
+
     }
 }
