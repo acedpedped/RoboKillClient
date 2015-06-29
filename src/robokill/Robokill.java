@@ -3,6 +3,8 @@ package robokill;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class Robokill. start point of program.
@@ -23,116 +25,82 @@ public class Robokill
 	private JPanel panel;
 
 	public boolean voiceOn = true;
-
+	
+	
 	public Robokill()
 	{
-		//setUndecorated(true);
-//		SplashScreen scr = new SplashScreen();
-
-
-		panel = new SetBack();
-//        frame.setLayout(new CardLayout());
-//        frame.setLayout(new CardLayout());
-		frame = new JFrame();
+		this.frame = new JFrame();
+//		setUndecorated(true);
 
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		frame.setLocation(150, 70);
 		frame.setResizable(false);
-		//frame.setLayout(null);
+
+		panel = new JPanel(true)
+		{
+
+			@Override
+			protected void paintComponent(Graphics g)
+			{
+				super.paintComponent(g);
+
+				Image img1 = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
+				g.drawImage(img1, 0, 0, 800, 600, null);
+			}
+
+		};
 
 		frame.add(panel);
-//		frame.setVisible(true);
+		frame.setVisible(true);
+		loading();
+		mainMenu = new MainMenu();
+		frame.add(mainMenu);
+		frame.repaint();
+		frame.remove(panel);
+		frame.repaint();
 
 	}
 
-	public void loading(Graphics g)
+	private void loading()
 	{
-		Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-		for (int i = 0; i <= 663; i += 3)
+		final Graphics g = frame.getGraphics();
+		Thread t = new Thread(new Runnable()
 		{
-			g.drawImage(img, 70, 526, i, 16, null);
-			//repaint();
-			try
-			{
-				Thread.sleep(5);
-			}
-			catch (InterruptedException e)
-			{
-			}
-		}
 
-//            frame.remove(panel);
-//            mainMenu = new MainMenu();
-//            frame.add(mainMenu);
+			@Override
+			public void run()
+			{
+				Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
+				for (int i = 0; i <= 662; i += 2)
+				{
+					g.drawImage(img, 69, 548, i, 16, null);
+					try
+					{
+						Thread.sleep(5);
+					}
+					catch (InterruptedException e)
+					{
+					}
+				}
+
+			}
+		});
+		t.start();
+		try
+		{
+			t.join();
+		}
+		catch (InterruptedException ex)
+		{
+			Logger.getLogger(Robokill.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		
 	}
 
 	public static void main(String args[])
 	{
 		new Robokill();
-		frame.setVisible(true);
-	}
-
-	private class SetBack extends JPanel
-	{
-
-		public SetBack()
-		{
-			setSize(800, 600);
-			setVisible(true);
-		}
-
-		@Override
-		public void paintComponent(final Graphics g)
-		{
-			super.paintComponent(g);
-			Image bck = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 3.jpg").getImage();
-			g.drawImage(bck, 0, 0, 800, 600, null);
-//            loading(g);
-
-			new Thread(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-					for (int i = 0; i <= 663; i += 3)
-					{
-						g.drawImage(img, 70, 526, i, 16, null);
-						//repaint();
-						try
-						{
-							Thread.sleep(5);
-						}
-						catch (InterruptedException e)
-						{
-						}
-					}
-				}
-			}).start();
-
-		}
-
-//		public void loading(Graphics g)
-//		{
-//			Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-//			for (int i = 0; i <= 663; i += 3)
-//			{
-//				g.drawImage(img, 70, 526, i, 16, null);
-//				//repaint();
-//				try
-//				{
-//					Thread.sleep(5);
-//				}
-//				catch (InterruptedException e)
-//				{
-//				}
-//			}
-//
-////            frame.remove(panel);
-////            mainMenu = new MainMenu();
-////            frame.add(mainMenu);
-//		}
 	}
 
 }
