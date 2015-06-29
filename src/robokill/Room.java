@@ -30,12 +30,12 @@ public class Room extends Map
 	private Cell[][] cells = new Cell[11][15];
 	private boolean isCleaned;
 	//private Robot robot;
-    private String dir;
-    private ArrayList<Box> boxes = new ArrayList<Box>();
-    private ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
-    private ArrayList<Door> doors = new ArrayList<Door>();
+	private String dir;
+	private ArrayList<Box> boxes = new ArrayList<Box>();
+	private ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
+	private ArrayList<Door> doors = new ArrayList<Door>();
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    private boolean isFin = false;
+	private boolean isFin = false;
 	private Robot robot;
 
 	public Robot getRobot()
@@ -47,7 +47,6 @@ public class Room extends Map
 	{
 		this.robot = robot;
 	}
-	private ArrayList<Enemy> enemies;
 	private final ArrayList<Bullet> bullets;
 	private ArrayList<Thread> threads;
 
@@ -57,20 +56,19 @@ public class Room extends Map
 
 	public Room(ArrayList<Box> boxes, ArrayList<SmallBarrier> barriers, ArrayList<Enemy> enemies, ArrayList<Door> doors)
 	{
-		super(true);
+		super();
 		this.threads = new ArrayList<>();
 		this.enemies = new ArrayList<>();
 		this.bullets = new ArrayList<>();
 
-        this.boxes = boxes;
-        this.barriers = barriers;
-        this.enemies = enemies;
-        this.doors = doors;
+		this.boxes = boxes;
+		this.barriers = barriers;
+		this.enemies = enemies;
+		this.doors = doors;
 
-        setDoubleBuffered(true);
+		setDoubleBuffered(true);
 
-        init();
-
+		init();
 
 		//WASD + Arrow Keys
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "up");
@@ -140,17 +138,31 @@ public class Room extends Map
 		fire = b;
 	}
 
-    public void init()
-    {
-        for(int i=0;i<boxes.size();i++)
-            cells[boxes.get(i).iCell()][boxes.get(i).jCell()] = new Cell(boxes.get(i), boxes.get(i).iCell(), boxes.get(i).jCell());
-        for(int i = 0; i < barriers.size(); i++)
-        {
-            int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
-            cells[x][y] = new Cell(barriers.get(i), x, y);
-        }
+	public void init()
+	{
+		robot = new Robot(400, 300);
+		robot.addGun(new LightBlaster(this));
 
-    }
+		for (Weapon w : robot.getGuns())
+		{
+			threads.add(new Thread(w));
+		}
+		for (Thread t : threads)
+		{
+			t.start();
+		}
+
+		for (int i = 0; i < boxes.size(); i++)
+		{
+			cells[boxes.get(i).iCell()][boxes.get(i).jCell()] = new Cell(boxes.get(i), boxes.get(i).iCell(), boxes.get(i).jCell());
+		}
+		for (int i = 0; i < barriers.size(); i++)
+		{
+			int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
+			cells[x][y] = new Cell(barriers.get(i), x, y);
+		}
+
+	}
 
 	public void setCell(int i, int j, Cell c)
 	{
@@ -161,7 +173,7 @@ public class Room extends Map
 	}
 
 	@Override
-    public void paintComponent(Graphics g)
+	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();
@@ -180,12 +192,12 @@ public class Room extends Map
 
 				g.drawImage(c.getImage(), c.getxPos(), c.getyPos(), c.getImage().getWidth(null), c.getImage().getHeight(null), null);
 
-            }
+			}
 		}
-        for(int i=0;i<doors.size();i++)
-        {
-            doors.get(i).drawDoor(g, isFin);
-        }
+		for (int i = 0; i < doors.size(); i++)
+		{
+			doors.get(i).drawDoor(g, isFin);
+		}
 		robot.move(up, down, left, right);
 
 //		System.err.println(" u:" + up + " d:" + down + " l:" + left + " r:" + right);
@@ -228,15 +240,16 @@ public class Room extends Map
 		repaint();
 	}
 
-    public boolean isFin()
-    {
-        return isFin;
-    }
+	public boolean isFin()
+	{
+		return isFin;
+	}
 
-    public void setIsFin(boolean isFin)
-    {
-        this.isFin = isFin;
-    }
+	public void setIsFin(boolean isFin)
+	{
+		this.isFin = isFin;
+	}
+
 	private boolean isValid(int i, int j)
 	{
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
@@ -255,21 +268,6 @@ public class Room extends Map
 		}
 	}
 
-	private void init()
-	{
-		robot = new Robot(400, 300);
-		robot.addGun(new LightBlaster(this));
-
-		for (Weapon w : robot.getGuns())
-		{
-			threads.add(new Thread(w));
-		}
-		for (Thread t : threads)
-		{
-			t.start();
-		}
-	}
-
 	private class MoveAction extends AbstractAction
 	{
 
@@ -280,24 +278,30 @@ public class Room extends Map
 		{
 			this.dir = dir;
 			this.d = d;
-            int a;
+			int a;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-            if(dir == "up")
-                up = d;
-            else if(dir == "down")
-                down = d;
-            else if(dir == "left")
-                left = d;
-            else if(dir == "right")
-                right = d;
+			if (dir == "up")
+			{
+				up = d;
+			}
+			else if (dir == "down")
+			{
+				down = d;
+			}
+			else if (dir == "left")
+			{
+				left = d;
+			}
+			else if (dir == "right")
+			{
+				right = d;
+			}
 
 		}
 	}
-	
-	
 
 }
