@@ -79,8 +79,6 @@ public class Bullet
 	void move()
 	{		
 		double sin = Math.sin(Math.toRadians(angle));
-//		System.err.println(sin);
-//		System.err.println("" + angle + " : " + Math.sin(angle));
 		double cos = Math.cos(Math.toRadians(angle));
 		
 		double newx = x - sin*10;

@@ -74,7 +74,7 @@ public class Robokill
 				Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
 				for (int i = 0; i <= 664; i += 2)
 				{
-					g.drawImage(img, 72, 550, i, 18, null);
+					g.drawImage(img, 70, 548, i, 16, null);
 					try
 					{
 						Thread.sleep(1);

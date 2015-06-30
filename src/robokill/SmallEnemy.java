@@ -3,8 +3,7 @@
  */
 package robokill;
 
-import javafx.scene.shape.*;
-import javafx.scene.shape.Rectangle;
+
 
 import javax.swing.*;
 import java.awt.*;
