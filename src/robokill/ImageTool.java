@@ -233,7 +233,7 @@ public abstract class ImageTool {
      * @param angle The angle in degrees
      * @return The rotated image
      */
-    public static Image rotate(Image img, double angle){
+    public static Image rotate(Image img, double angle) {
         double sin = Math.abs(Math.sin(Math.toRadians(angle))), cos = Math.abs(Math.cos(Math.toRadians(angle)));
         int w = img.getWidth(null), h = img.getHeight(null);
         int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math.floor(h
