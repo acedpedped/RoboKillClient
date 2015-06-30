@@ -224,7 +224,7 @@ public class Room extends JPanel
             //System.out.print(doors.get(i).iCell());
             if(l == 100)
                 isFin = true;
-			doors.get(i).drawDoor(g, isFin);
+			//doors.get(i).drawDoor(g, isFin);
 		}
 		robot.move(up, down, left, right);
 
@@ -257,7 +257,7 @@ public class Room extends JPanel
 		{
             System.out.print(e.getxPos() + " ");
             System.out.println(e.getyPos() + " ");
-			e.move(g, robot.getxPos(), robot.getyPos());
+			e.move(g, robot.getxPos(), robot.getyPos(), this);
 			//g.drawImage(e.getImage(), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
             //g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
 		}
@@ -294,6 +294,10 @@ public class Room extends JPanel
         return boxes;
     }
 
+    public ArrayList<SmallBarrier> getBarriers()
+    {
+        return barriers;
+    }
 	/*void addEnemy(Enemy enemy)
 	{
 		enemies.add(enemy);
