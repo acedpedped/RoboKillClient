@@ -1,9 +1,6 @@
 package robokill;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.MouseInfo;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -226,7 +223,8 @@ public class Room extends JPanel
 				}
 
 				g.drawImage(c.getImage(), c.getxPos(), c.getyPos(), c.getImage().getWidth(null), c.getImage().getHeight(null), null);
-
+                g.setColor(Color.BLACK);
+                g.drawRect(c.getxPos(), c.getyPos(), c.getImage().getWidth(null), c.getImage().getHeight(null));
 			}
 		}
 
@@ -240,10 +238,12 @@ public class Room extends JPanel
 			g.drawImage(door.getImage(isFin), door.getX(), door.getY(), null);
 		}
 
-		robot.move(up, down, left, right);
+		robot.move(up, down, left, right, this);
 
 //		System.err.println(" u:" + up + " d:" + down + " l:" + left + " r:" + right);
 		g.drawImage(robot.getBody(), robot.getxPos() - robot.getBody().getWidth(null) / 2, robot.getyPos() - robot.getBody().getHeight(null) / 2, robot.getBody().getWidth(null), robot.getBody().getHeight(null), null);
+        g.setColor(Color.BLACK);
+        g.drawRect(robot.getxPos() - robot.getWidth() / 2, robot.getyPos() - robot.getHeight() / 2, robot.getWidth(), robot.getHeight());
 
 //		System.err.println(robot.getxPos() + " " + robot.getyPos());
 		Point p = MouseInfo.getPointerInfo().getLocation();
@@ -308,6 +308,15 @@ public class Room extends JPanel
 	{
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
 	}
+
+    public ArrayList<Door> getDoor()
+    {
+        return doors;
+    }
+    public ArrayList<Enemy> getEnemies()
+    {
+        return enemies;
+    }
 
 	public ArrayList<Box> getBox()
 	{

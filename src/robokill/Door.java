@@ -100,4 +100,19 @@ public class Door
 
 		return imgs[ind];
 	}
+
+    public Rectangle getRect()
+    {
+        return new Rectangle(x, y, open.getWidth(null), open.getHeight(null));
+    }
+
+    public  boolean isAlwaysOpen()
+    {
+        return alwaysOpen;
+    }
+
+    public void setOpen(boolean flag)
+    {
+        alwaysOpen = flag;
+    }
 }

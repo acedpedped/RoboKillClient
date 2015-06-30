@@ -42,14 +42,15 @@ public class Enemy extends JPanel
     /**
      * makes rectangle around enemy
      */
-    public void makeRect()
-    {
-        rect = new Rectangle(xPos, yPos, img.get(0).getWidth(null), img.get(0).getHeight(null));
-    }
-
     public Rectangle getRect()
     {
+        rect = new Rectangle(xPos, yPos, img.get(0).getWidth(null), img.get(0).getHeight(null));
         return rect;
+    }
+
+    public void die()
+    {
+
     }
 
 	public void move(Graphics g, int x, int y, Room room)
@@ -57,10 +58,6 @@ public class Enemy extends JPanel
 
 	}
 
-    public void die(ArrayList<Enemy> enemies, int index)
-    {
-
-    }
 
     /**
      *

@@ -20,7 +20,9 @@ public class Robot extends JPanel
 	private int yPos;
 
 	private int health = 100;
+    private int width, height;
 	private int curImg;
+    private Rectangle rect;
 	private double headDeg = 90;
 	private double direction = 90;
 	private ArrayList<Weapon> guns = new ArrayList<Weapon>();
@@ -58,7 +60,10 @@ public class Robot extends JPanel
 		super(true);
 		xPos = x;
 		yPos = y;
-		
+
+        Image image = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "robot" + sep + "1.png").getImage();
+        height = image.getHeight(null);
+        width = image.getWidth(null);
 		
 		for(int i=1; i<=40; i++)
 			moves[1][0][i-1] = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "robot" + sep + String.valueOf(i) + ".png").getImage();
@@ -96,6 +101,21 @@ public class Robot extends JPanel
 		return body;
 	}
 
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public  int getWidth()
+    {
+        return width;
+    }
+
+    public Rectangle makeRect()
+    {
+        rect = new Rectangle(xPos - width / 2, yPos - height / 2, width, height);
+        return rect;
+    }
 	public Image getHead(Point p)
 	{
 		Point dif = p;
@@ -195,31 +215,95 @@ public class Robot extends JPanel
 	 * @param left
 	 * @param right
 	 */
-	public void move(boolean up, boolean down, boolean left, boolean right)
+	public void move(boolean up, boolean down, boolean left, boolean right, Room room)
 	{
+        int tmp1 = xPos, tmp2 = yPos;
+
+
 		if(up && down)
 			up = down = false;
 		if(left && right)
 			left = right = false;	
-		
-		int d = 2;
-		if (up)
-		{
-			setyPos(yPos - d);
-		}
-		if (down)
-		{
-			setyPos(yPos + d);
-		}
-		if (left)
-		{
-			setxPos(xPos - d);
-		}
-		if (right)
-		{
-			setxPos(xPos + d);
-		}
-		
+        //if(canMove)
+        //{
+		    int d = 2;
+		    if (up)
+		    {
+			    setyPos(yPos - d);
+		    }
+		    if (down)
+		    {
+			    setyPos(yPos + d);
+		    }
+		    if (left)
+		    {
+			    setxPos(xPos - d);
+		    }
+		    if (right)
+		    {
+			    setxPos(xPos + d);
+		    }
+        //}
+        boolean canMove = true;
+        ArrayList<Box> boxes = new ArrayList<Box>();
+        boxes = room.getBox();
+        ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
+        barriers = room.getBarriers();
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        enemies = room.getEnemies();
+        ArrayList<Door>  doors = new ArrayList<Door>();
+        doors = room.getDoor();
+
+        if(xPos - width / 2 < 0 || xPos + width / 2 > 800)
+            canMove = false;
+        if(yPos - height / 2 < 0 || yPos + height / 2 > 600)
+            canMove = false;
+
+        for(int i=0;i<boxes.size();i++)
+        {
+            if(makeRect().intersects(boxes.get(i).getRect()))
+                canMove = false;
+        }
+        for(int i=0;i<barriers.size();i++)
+        {
+            if(makeRect().intersects(barriers.get(i).getRect()))
+                canMove = false;
+        }
+        for(int i=0;i<enemies.size();i++)
+        {
+            if(makeRect().intersects(enemies.get(i).getRect()))
+            {
+                if(enemies.get(i) instanceof SmallEnemy)
+                {
+                    setHealth(health - 10);
+                    //if(health <= 0)
+                    //    new GameOver();
+                    canMove = false;
+                    enemies.get(i).die();
+                    enemies.remove(i);
+                }
+                else
+                {
+                    setHealth(health - 15);
+                    //if(health <=  )
+                    //    new GameOver();
+                    canMove = false;
+                    enemies.get(i).die();
+                    enemies.remove(i);
+                }
+            }
+        }
+        for(int i=0;i<doors.size();i++)
+        {
+            if(makeRect().intersects(doors.get(i).getRect()) && !room.isFin())
+                canMove = false;
+        }
+		if(!canMove)
+        {
+            setxPos(tmp1);
+            setyPos(tmp2);
+        }
+
 		if(left && up)
 		{
 			update(-1, -1);
@@ -256,7 +340,7 @@ public class Robot extends JPanel
 		{
 			//nothing changes.
 		}
-		
+
 	}
 	
 	void update(int dx, int dy)

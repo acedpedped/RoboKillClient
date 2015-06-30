@@ -34,7 +34,7 @@ public class Map
 		
 		build();
 		
-		curRoom = rooms.get(4);
+		curRoom = rooms.get(0);
 
 		robot.addGun(new LightBlaster(curRoom));
 		robot.addGun(new HeavyBlaster(curRoom));
@@ -62,6 +62,7 @@ public class Map
 
 //		doors.add(new Door(true, false, false, false, 0, 1));
 		enemies.add(new SmallEnemy(6, 6));
+        doors.add(new Door(true, false, false, false, 1));
 		rooms.add(new Room(boxes, barriers, enemies, doors));
 		//Robokill.frame.add(rooms.get(0));
 		doors.clear();

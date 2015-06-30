@@ -37,7 +37,7 @@ public class SmallEnemy extends Enemy
 	@Override
     public void move(Graphics g, int x, int y, Room room)
     {
-        makeRect();
+        //makeRect();
         update(x, y, room);
         //dir = Math.atan2((double)x, (double)y);
         //Image tmp = ImageTool.rotate(img.get(index), degDif * 90);
