@@ -28,9 +28,10 @@ public class Room extends JPanel
 {
 
 	private Cell[][] cells = new Cell[11][15];
+	private boolean isCleaned;
 	//private Robot robot;
 	private String dir;
-	private int l;
+    private int l;
 	private ArrayList<Box> boxes = new ArrayList<Box>();
 	private ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
 	private ArrayList<Door> doors = new ArrayList<Door>();
@@ -61,35 +62,28 @@ public class Room extends JPanel
 		this.enemies = new ArrayList<Enemy>();
 		this.bullets = new ArrayList<Bullet>();
 
-		for (Door door : doors)
-		{
-			this.doors.add(door);
-		}
-		for (Box box : boxes)
-		{
-			this.boxes.add(box);
-		}
-		for (SmallBarrier barrier : barriers)
-		{
-			this.barriers.add(barrier);
-		}
-		for (Enemy enemie : enemies)
-		{
-			this.enemies.add(enemie);
-		}
-
+        for(int i=0;i<doors.size();i++)
+            this.doors.add(doors.get(i));
+        for(int i=0;i<boxes.size();i++)
+            this.boxes.add(boxes.get(i));
+        for(int i=0;i<barriers.size();i++)
+            this.barriers.add(barriers.get(i));
+        for(int i=0;i<enemies.size();i++)
+            this.enemies.add(enemies.get(i));
 		/*this.boxes = boxes;
-		 this.barriers = barriers;
-		 this.enemies = enemies;
-		 this.doors = doors;   */
-//        System.out.print(doors.size());
-		setSize(800, 600);
-		//setLayout(null);
+		this.barriers = barriers;
+		this.enemies = enemies;
+		this.doors = doors;   */
+
+        System.out.print(doors.size());
+
+        setSize(800, 600);
+        //setLayout(null);
 		setDoubleBuffered(true);
 
 		init();
 
-		//System.out.print(doors.size());
+        //System.out.print(doors.size());
 		//WASD + Arrow Keys
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "up");
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "up");
@@ -123,6 +117,7 @@ public class Room extends JPanel
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released RIGHT"), "nright");
 		getActionMap().put("nright", new MoveAction("right", false));
 
+
 		addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -148,10 +143,11 @@ public class Room extends JPanel
 
 		});
 
-//		System.out.println(doors.size());
+        System.out.println(doors.size());
+		isCleaned = false;
 		setVisible(true);
 		//init();
-		//repaint();
+        //repaint();
 	}
 
 	void setFire(boolean b)
@@ -159,22 +155,22 @@ public class Room extends JPanel
 		fire = b;
 	}
 
-	private void init()
+	public void init()
 	{
-		//System.out.print(doors.size());
-
-		robot = Map.robot;
+        //System.out.print(doors.size());
+		robot = new Robot(400, 300);
+		robot.addGun(new LightBlaster(this));
 
 		for (Weapon w : robot.getGuns())
 		{
 			threads.add(new Thread(w));
 		}
-		for (Thread t : threads)
+		/*for (Thread t : threads)
 		{
 			t.start();
-		}
+		} */
 
-		//System.out.print(doors.size());
+        //System.out.print(doors.size());
 		for (int i = 0; i < boxes.size(); i++)
 		{
 			cells[boxes.get(i).iCell()][boxes.get(i).jCell()] = new Cell(boxes.get(i), boxes.get(i).iCell(), boxes.get(i).jCell());
@@ -184,11 +180,11 @@ public class Room extends JPanel
 			int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
 			cells[x][y] = new Cell(barriers.get(i), x, y);
 		}
-		for (int i = 0; i < enemies.size(); i++)
-		{
+        for(int i = 0; i < enemies.size(); i++)
+        {
 
-		}
-		//System.out.print(doors.size());
+        }
+        //System.out.print(doors.size());
 
 	}
 
@@ -204,6 +200,7 @@ public class Room extends JPanel
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+        System.out.print(doors.size());
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();
 		g.drawImage(background, 0, 0, 800, 600, null);
 
@@ -222,28 +219,26 @@ public class Room extends JPanel
 
 			}
 		}
-
-		l++;
-		for (Door door : doors)
+		for (int i = 0; i < doors.size(); i++)
 		{
-			if (l == 200)
-			{
-				isFin = true;
-			}
-
-			g.drawImage(door.getImage(isFin), door.getX(), door.getY(), null);
+            //System.out.print(doors.get(i).iCell());
+            if(l == 100)
+                isFin = true;
+			doors.get(i).drawDoor(g, isFin);
 		}
-
 		robot.move(up, down, left, right);
 
+//		System.err.println(" u:" + up + " d:" + down + " l:" + left + " r:" + right);
 		g.drawImage(robot.getBody(), robot.getxPos() - robot.getBody().getWidth(null) / 2, robot.getyPos() - robot.getBody().getHeight(null) / 2, robot.getBody().getWidth(null), robot.getBody().getHeight(null), null);
 
+//		System.err.println(robot.getxPos() + " " + robot.getyPos());
 		Point p = MouseInfo.getPointerInfo().getLocation();
 		SwingUtilities.convertPointFromScreen(p, this);
 
 		Image head = robot.getHead(p);
 		g.drawImage(head, robot.getxPos() - head.getWidth(null) / 2, robot.getyPos() - head.getHeight(null) / 2, head.getWidth(null), head.getHeight(null), null);
 
+//		System.err.println(bullets.size());
 		synchronized (bullets)
 		{
 			for (Bullet b : bullets)
@@ -252,27 +247,24 @@ public class Room extends JPanel
 				Image bul = ImageTool.rotate(b.getImg(), b.getAngle());
 				g.drawImage(bul, b.getX() - bul.getWidth(null) / 2, b.getY() - bul.getHeight(null) / 2, bul.getWidth(null), bul.getHeight(null), null);
 				b.move();
+
 			}
 		}
+
+        l++;
 
 		for (Enemy e : enemies)
 		{
+            System.out.print(e.getxPos() + " ");
+            System.out.println(e.getyPos() + " ");
 			e.move(g, robot.getxPos(), robot.getyPos());
 			//g.drawImage(e.getImage(), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
-			//g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
-		}
-
-		if (isFin)
-		{
-			for (Door door : doors)
-			{
-				g.drawImage(door.getOpen(), door.getX(), door.getY(), null);
-			}
+            //g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
 		}
 
 		try
 		{
-			Thread.sleep(8);
+			Thread.sleep(15);
 		}
 		catch (InterruptedException e)
 		{
@@ -297,27 +289,23 @@ public class Room extends JPanel
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
 	}
 
-	public ArrayList<Box> getBox()
-	{
-		return boxes;
-	}
+    public ArrayList<Box> getBox()
+    {
+        return boxes;
+    }
 
 	/*void addEnemy(Enemy enemy)
-	 {
-	 enemies.add(enemy);
-	 } */
+	{
+		enemies.add(enemy);
+	} */
+
 	void addBullet(Bullet bullet)
 	{
 		synchronized (bullets)
 		{
 			bullets.add(bullet);
 		}
-	}
-
-	void addThread(Thread t)
-	{
-		threads.add(t);
-	}
+    }
 
 	private class MoveAction extends AbstractAction
 	{
