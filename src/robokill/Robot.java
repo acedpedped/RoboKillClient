@@ -38,8 +38,11 @@ public class Robot extends JPanel
 	public void addGun(Weapon w)
 	{
 		guns.add(w);
+		Thread t = new Thread(w);
+		Map.curRoom.addThread(t);
+		t.start();
 	}
-
+	
 	private Image body;
 	private static Image head;
 	private Image tmphead;

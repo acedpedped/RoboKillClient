@@ -83,8 +83,8 @@ public class Bullet
 //		System.err.println("" + angle + " : " + Math.sin(angle));
 		double cos = Math.cos(Math.toRadians(angle));
 		
-		double newx = x - sin*5;
-		double newy = y + cos*5;
+		double newx = x - sin*10;
+		double newy = y + cos*10;
 		setX((int)newx);
 		setY((int)newy);
 	}

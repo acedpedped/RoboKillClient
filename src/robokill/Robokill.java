@@ -77,7 +77,7 @@ public class Robokill
 					g.drawImage(img, 72, 550, i, 18, null);
 					try
 					{
-						Thread.sleep(5);
+						Thread.sleep(1);
 					}
 					catch (InterruptedException e)
 					{

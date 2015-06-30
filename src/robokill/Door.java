@@ -3,83 +3,101 @@ package robokill;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
- * Created with IntelliJ IDEA.
- * User: pedram
- * Date: 6/28/15
- * Time: 11:59 AM
- * To change this template use File | Settings | File Templates.
- */
-public class Door{
-    private int room1, room2;
-    private int x, y;
-    private ArrayList<Image> imgs = new ArrayList<Image>();
-    private String[] indexes  = new String[]{"976", "353", "803", "345", "635", "809"};
-    public static final String sep = File.separator;
+ * Door class. creates doors in rooms.
+ * 
+ * @author ParhamMLK
+ * @author pedram
+ * 
+ * @version 1.0
+*/
+public class Door
+{
+	private int to;
+	private int x, y;
 
-    public Door(boolean isUp, boolean isRight, boolean isDown, boolean isLeft, int room1, int room2)
-    {
-        //super(null, 0, 0);
-        this.room1 = room1;
-        this.room2 = room2;
-        if(isUp)
-        {
-            x = 360;
-            y = 21;
-            for(int i = 0;i < 6; i++)
-            {
-                imgs.add(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + ".png").getImage());
-            }
-        }
-        else if(isDown)
-        {
-            x = 360;
-            y = 550;
-            for(int i = 0;i < 6; i++)
-            {
-                imgs.add(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "2.png").getImage());
-            }
-        }
-        else if(isRight)
-        {
-            x = 737;
-            y = 274;
-            for(int i = 0;i < 6; i++)
-            {
-                imgs.add(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "1.png").getImage());
-            }
+	public int getX()
+	{
+		return x;
+	}
 
-        }
-        else
-        {
-            x = 10;
-            y = 274;
-            for(int i = 0;i < 6; i++)
-            {
-                imgs.add(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image " + indexes[i] + "3.png").getImage());
-            }
+	public void setX(int x)
+	{
+		this.x = x;
+	}
 
-        }
-    }
+	public int getY()
+	{
+		return y;
+	}
 
+	public void setY(int y)
+	{
+		this.y = y;
+	}
 
-    public void drawDoor(Graphics g, boolean isOpen)
-    {
-        if(!isOpen)
-            g.drawImage(imgs.get(0), x, y, null);
-        else
-        {
-            for(int i=0;i<6;i++)
-            {
-                g.drawImage(imgs.get(i), x, y, null);
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
-            }
-        }
-    }
+	public static final String sep = File.separator;
+	private Image[] imgs;
+	private Image open;
+	private int ind = 0;
+	private boolean alwaysOpen = false;
+
+	private double angle;
+
+	public Door(boolean isUp, boolean isRight, boolean isDown, boolean isLeft, int to)
+	{
+		this.to = to;
+		if (isUp)
+		{
+			x = 360;
+			y = 0;
+			angle = 0;
+		}
+		else if (isDown)
+		{
+			x = 360;
+			y = 525;
+			angle = 180;
+		}
+		else if (isRight)
+		{
+			angle = 90;
+			x = 800 - 55;
+			y = 274;
+		}
+		else
+		{
+			angle = 270;
+			x = -1;
+			y = 274;
+		}
+
+		imgs = new Image[30];
+		for (int i = 1; i <= 30; i++)
+		{
+			imgs[i - 1] = ImageTool.rotate(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "door" + sep + String.valueOf(i) + ".png").getImage(), angle);
+		}
+
+		open = ImageTool.rotate(new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "door" + sep + "open.png").getImage(), angle);
+	}
+
+	public Image getOpen()
+	{
+		return open;
+	}
+
+	public Image getImage(boolean openit)
+	{
+		if (openit)
+		{
+			ind = Math.max(ind - 1, 0);
+		}
+		else
+		{
+			ind = Math.min(ind + 1, 29);
+		}
+
+		return imgs[ind];
+	}
 }
