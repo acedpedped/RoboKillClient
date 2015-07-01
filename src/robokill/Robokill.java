@@ -55,10 +55,10 @@ public class Robokill
 		frame.setVisible(true);
 		loading();
 		mainMenu = new MainMenu();
+        frame.remove(panel);
 		frame.add(mainMenu);
 		frame.repaint();
-		frame.remove(panel);
-		frame.repaint();
+		//frame.repaint();
 
 	}
 
@@ -72,9 +72,9 @@ public class Robokill
 			public void run()
 			{
 				Image img = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 1.png").getImage();
-				for (int i = 0; i <= 662; i += 2)
+				for (int i = 0; i <= 664; i += 2)
 				{
-					g.drawImage(img, 69, 548, i, 16, null);
+					g.drawImage(img, 72, 550, i, 18, null);
 					try
 					{
 						Thread.sleep(5);

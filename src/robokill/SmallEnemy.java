@@ -7,7 +7,7 @@ package robokill;
  *
  * @author ParhamMLK
  */
-public class SmallEnemy extends Enemy
+/*public class SmallEnemy extends Enemy
 {
 
 	public SmallEnemy()
@@ -15,4 +15,4 @@ public class SmallEnemy extends Enemy
 	}
 	
 	
-}
+} */

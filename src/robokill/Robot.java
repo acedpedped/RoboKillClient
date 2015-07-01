@@ -23,7 +23,7 @@ public class Robot extends JPanel
 	private int curImg;
 	private double headDeg = 90;
 	private double direction = 90;
-	private ArrayList<Weapon> guns = new ArrayList<>();
+	private ArrayList<Weapon> guns = new ArrayList<Weapon>();
 
 	public ArrayList<Weapon> getGuns()
 	{

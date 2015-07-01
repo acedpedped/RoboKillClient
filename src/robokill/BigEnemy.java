@@ -7,7 +7,8 @@ package robokill;
  *
  * @author ParhamMLK
  */
-public class BigEnemy extends Enemy
+/*public class BigEnemy extends Enemy
 {
+
 	
-}
+} */

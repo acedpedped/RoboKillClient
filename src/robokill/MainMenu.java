@@ -17,6 +17,7 @@ public class MainMenu extends Menu implements ActionListener{
     private MainMenu mainMenu;
     public static Map map;
     public static OptionsMenu optionMenu;
+    public static CreditsMenu creditsMenu;
 
 
     public  MainMenu()
@@ -83,21 +84,29 @@ public class MainMenu extends Menu implements ActionListener{
         if(cmd == "start")
         {
             Robokill.frame.remove(Robokill.mainMenu);
-            (map = new Map()).build();
+            map = new Map();
+            Robokill.frame.repaint();
             //map.build();
-            Robokill.frame.add(map);
             //map.build();
         }
         else if(cmd == "options")
         {
-            Robokill.frame.remove(Robokill.mainMenu);
             optionMenu = new OptionsMenu();
+            Robokill.frame.remove(Robokill.mainMenu);
+            //Robokill.frame.getContentPane().setVisible(false);
+            //repaint();
             Robokill.frame.add(optionMenu);
+            Robokill.frame.repaint();
+            //repaint();
         }
         else if(cmd == "credits")
         {
            //frame.dispose();
-           new CreditsMenu();
+           creditsMenu = new CreditsMenu();
+            Robokill.frame.add(creditsMenu);
+            Robokill.frame.repaint();
+            Robokill.frame.remove(Robokill.mainMenu);
+            //Robokill.frame.repaint();
         }
     }
 }

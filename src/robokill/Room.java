@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
  *
  * @version 1.0
  */
-public class Room extends Map
+public class Room extends JPanel
 {
 
 	private Cell[][] cells = new Cell[11][15];
@@ -57,19 +57,24 @@ public class Room extends Map
 	public Room(ArrayList<Box> boxes, ArrayList<SmallBarrier> barriers, ArrayList<Enemy> enemies, ArrayList<Door> doors)
 	{
 		super();
-		this.threads = new ArrayList<>();
-		this.enemies = new ArrayList<>();
-		this.bullets = new ArrayList<>();
+		this.threads = new ArrayList<Thread>();
+		this.enemies = new ArrayList<Enemy>();
+		this.bullets = new ArrayList<Bullet>();
 
 		this.boxes = boxes;
 		this.barriers = barriers;
 		this.enemies = enemies;
 		this.doors = doors;
 
+        System.out.print(doors.size());
+
+        setSize(800, 600);
+        //setLayout(null);
 		setDoubleBuffered(true);
 
 		init();
 
+        //System.out.print(doors.size());
 		//WASD + Arrow Keys
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "up");
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "up");
@@ -103,6 +108,7 @@ public class Room extends Map
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released RIGHT"), "nright");
 		getActionMap().put("nright", new MoveAction("right", false));
 
+
 		addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -128,9 +134,11 @@ public class Room extends Map
 
 		});
 
+        System.out.println(doors.size());
 		isCleaned = false;
 		setVisible(true);
-		init();
+		//init();
+        //repaint();
 	}
 
 	void setFire(boolean b)
@@ -140,6 +148,7 @@ public class Room extends Map
 
 	public void init()
 	{
+        //System.out.print(doors.size());
 		robot = new Robot(400, 300);
 		robot.addGun(new LightBlaster(this));
 
@@ -147,11 +156,12 @@ public class Room extends Map
 		{
 			threads.add(new Thread(w));
 		}
-		for (Thread t : threads)
+		/*for (Thread t : threads)
 		{
 			t.start();
-		}
+		} */
 
+        //System.out.print(doors.size());
 		for (int i = 0; i < boxes.size(); i++)
 		{
 			cells[boxes.get(i).iCell()][boxes.get(i).jCell()] = new Cell(boxes.get(i), boxes.get(i).iCell(), boxes.get(i).jCell());
@@ -161,6 +171,7 @@ public class Room extends Map
 			int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
 			cells[x][y] = new Cell(barriers.get(i), x, y);
 		}
+        //System.out.print(doors.size());
 
 	}
 
@@ -175,9 +186,10 @@ public class Room extends Map
 	@Override
 	public void paintComponent(Graphics g)
 	{
+        System.out.print(doors.size());
 		super.paintComponent(g);
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();
-		//g.drawImage(background, 0, 0, 800, 600, null);
+		g.drawImage(background, 0, 0, 800, 600, null);
 
 		for (int i = 0; i < 11; i++)
 		{
@@ -196,6 +208,7 @@ public class Room extends Map
 		}
 		for (int i = 0; i < doors.size(); i++)
 		{
+            //System.out.print(doors.get(i).iCell());
 			doors.get(i).drawDoor(g, isFin);
 		}
 		robot.move(up, down, left, right);
@@ -224,8 +237,9 @@ public class Room extends Map
 
 		for (Enemy e : enemies)
 		{
-			e.move();
+			e.move(robot.getxPos(), robot.getyPos());
 			g.drawImage(e.getImage(), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
+            g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
 		}
 
 		try
@@ -255,10 +269,15 @@ public class Room extends Map
 		return (i >= 0 && i <= 10) && (j >= 0 && j <= 14);
 	}
 
-	void addEnemy(Enemy enemy)
+    public ArrayList<Box> getBox()
+    {
+        return boxes;
+    }
+
+	/*void addEnemy(Enemy enemy)
 	{
 		enemies.add(enemy);
-	}
+	} */
 
 	void addBullet(Bullet bullet)
 	{
@@ -266,7 +285,7 @@ public class Room extends Map
 		{
 			bullets.add(bullet);
 		}
-	}
+    }
 
 	private class MoveAction extends AbstractAction
 	{

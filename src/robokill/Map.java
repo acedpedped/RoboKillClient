@@ -13,11 +13,15 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Map extends JPanel{
+public class Map{
     public static String sep = File.separator;
     //protected JFrame frame = new JFrame();
 
     //JPanel panel = this;
+    ArrayList<Box> boxes = new ArrayList<Box>();
+    ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
+    ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    ArrayList<Door> doors = new ArrayList<Door>();
 
     protected ArrayList<Room> rooms = new ArrayList<Room>();
     protected Robot robot = new Robot(400, 500);
@@ -25,22 +29,17 @@ public class Map extends JPanel{
 
     public Map()
     {
-        setSize(800, 600);
-        setDoubleBuffered(true);
-
+        build();
+        System.out.print(rooms.get(3).getBox().size());
+        Robokill.frame.add(rooms.get(0));
+        //Robokill.frame.repaint();
         //new Room(null, null, null, null);
 
 
 
+
     }
 
-    @Override
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
-        //rooms.get(0).paint(g);
-    }
     /**
      * shows the situation of the rooms
      */
@@ -55,13 +54,10 @@ public class Map extends JPanel{
      */
     public void build()
     {
-        ArrayList<Box> boxes = new ArrayList<Box>();
-        ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
-        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-        ArrayList<Door> doors = new ArrayList<Door>();
 
         doors.add(new Door(true, false, false, false, 0, 1));
         rooms.add(new Room(boxes, barriers, enemies, doors));
+        //Robokill.frame.add(rooms.get(0));
         doors.clear();
 
         /////////////////0000000000///////////////////
@@ -94,6 +90,7 @@ public class Map extends JPanel{
         barriers.add(new SmallBarrier(2, 9, 3));
         doors.add(new Door(false, true, false, false, 2, 3));   doors.add(new Door(false, false, false, true, 3, 4));
         rooms.add(new Room(boxes, barriers, enemies, doors));
+        //System.out.print(rooms.get(3).getBox().size());
         boxes.clear(); doors.clear(); barriers.clear();
 
         ///////////////////333333333333//////////////////

@@ -15,7 +15,7 @@ public class CreditsMenu extends Menu {
     public CreditsMenu()
     {
         super();
-        Robokill.frame.add(this);
+        //Robokill.frame.add(this);
         Robokill.frame.setVisible(true);
     }
 
@@ -26,5 +26,6 @@ public class CreditsMenu extends Menu {
         g.setFont(font);
         g.setColor(Color.YELLOW);
         g.drawString("Credits", 0, 0);
+        //Robokill.frame.repaint();
     }
 }

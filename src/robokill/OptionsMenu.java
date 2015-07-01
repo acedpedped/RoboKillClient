@@ -85,8 +85,7 @@ public class OptionsMenu extends Menu implements ActionListener {
         add(musicOn);
 
 
-        Robokill.frame.add(this);
-        Robokill.frame.setVisible(true);
+        //Robokill.frame.getContentPane().setVisible(true);
 
 
     }
@@ -109,6 +108,7 @@ public class OptionsMenu extends Menu implements ActionListener {
         {
             Robokill.frame.remove(MainMenu.optionMenu);
             Robokill.frame.add(Robokill.mainMenu);
+            Robokill.frame.repaint();
         }
 
     }

@@ -3,6 +3,7 @@ package robokill;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -18,28 +19,39 @@ import javax.swing.JPanel;
 public abstract class Enemy extends JPanel
 {
 
-	private int xPos;
-	private int yPos;
-
-	private static final int[] dx =
-	{
-		-1, -1, -1, 0, 0, 0, 1, 1, 1
-	};
-	private static final int[] dy =
-	{
-		-1, 0, 1, -1, 0, 1, -1, 0, 1
-	};
+	protected int xPos;
+	protected int yPos;
+    protected double dir;
+    protected double degDif;
+    protected int health;
 
 	public static final String sep = File.separator;
 
-	public void move()
-	{
-		Random rnd = new Random();
+    public Enemy(int i, int j)
+    {
+        this.dir = -Math.PI / 2;
+        health = 3;
+    }
 
-		xPos += dx[rnd.nextInt(dx.length)];
-		yPos += dy[rnd.nextInt(dy.length)];
+	public void move(int x, int y)
+	{
+        double shib = (Math.atan2((double)x, (double)y) - Math.atan2((double)xPos, (double)yPos));
+
 	}
 
+    public void die(ArrayList<Enemy> enemies, int index)
+    {
+
+    }
+
+    /**
+     *
+     * @return the angle that enemy shoud turn
+     */
+    public double degDif()
+    {
+        return degDif;
+    }
 	/**
 	 * Get the value of xPos
 	 *
@@ -80,6 +92,19 @@ public abstract class Enemy extends JPanel
 		this.yPos = yPos;
 	}
 
+    public void setDir(double dir)
+    {
+        this.dir = dir;
+    }
+
+    /**
+     *
+     * @return the value of dir
+     */
+    public double getDir()
+    {
+        return dir;
+    }
 	public Image getImage()
 	{
 		return new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 413.png").getImage();
