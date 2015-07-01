@@ -36,9 +36,11 @@ public class Map
 		
 		curRoom = rooms.get(0);
 
+//		System.err.println(curRoom.getEnemies().size());
+
 		robot.addGun(new LightBlaster(curRoom));
-		robot.addGun(new HeavyBlaster(curRoom));
-		robot.addGun(new HeavyShotgun(curRoom));
+//		robot.addGun(new HeavyBlaster(curRoom));
+//		robot.addGun(new HeavyShotgun(curRoom));
 		
 		Robokill.frame.add(curRoom);
 		Robokill.frame.repaint();
@@ -61,6 +63,9 @@ public class Map
 	{
 
 //		doors.add(new Door(true, false, false, false, 0, 1));
+		enemies.add(new SmallEnemy(1, 1));
+		enemies.add(new SmallEnemy(8, 1));
+		enemies.add(new BigEnemy(1, 2));
 		enemies.add(new SmallEnemy(6, 6));
         doors.add(new Door(true, false, false, false, 1));
 		rooms.add(new Room(boxes, barriers, enemies, doors));

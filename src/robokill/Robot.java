@@ -269,10 +269,13 @@ public class Robot extends JPanel
             if(makeRect().intersects(barriers.get(i).getRect()))
                 canMove = false;
         }
+		
+		
         for(int i=0;i<enemies.size();i++)
         {
             if(makeRect().intersects(enemies.get(i).getRect()))
             {
+//				System.err.println("nnnn");
                 if(enemies.get(i) instanceof SmallEnemy)
                 {
                     setHealth(health - 10);
@@ -291,6 +294,9 @@ public class Robot extends JPanel
                     enemies.get(i).die();
                     enemies.remove(i);
                 }
+				
+				if(enemies.size() == 0)
+					Map.curRoom.setIsFin(true);
             }
         }
         for(int i=0;i<doors.size();i++)
