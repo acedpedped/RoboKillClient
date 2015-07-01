@@ -32,7 +32,7 @@ public class Map{
         build();
         System.out.print(rooms.get(3).getBox().size());
         Robokill.frame.add(rooms.get(0));
-        //Robokill.frame.repaint();
+        Robokill.frame.repaint();
         //new Room(null, null, null, null);
 
 
@@ -56,6 +56,7 @@ public class Map{
     {
 
         doors.add(new Door(true, false, false, false, 0, 1));
+        enemies.add(new SmallEnemy(6, 6));
         rooms.add(new Room(boxes, barriers, enemies, doors));
         //Robokill.frame.add(rooms.get(0));
         doors.clear();

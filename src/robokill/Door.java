@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Time: 11:59 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Door extends Object{
+public class Door{
     private int room1, room2;
     private int x, y;
     private ArrayList<Image> imgs = new ArrayList<Image>();
@@ -21,7 +21,7 @@ public class Door extends Object{
 
     public Door(boolean isUp, boolean isRight, boolean isDown, boolean isLeft, int room1, int room2)
     {
-        super(null, 0, 0);
+        //super(null, 0, 0);
         this.room1 = room1;
         this.room2 = room2;
         if(isUp)
@@ -64,9 +64,6 @@ public class Door extends Object{
         }
     }
 
-    public Door(Image img, int i, int j) {
-        super(img, i, j);
-    }
 
     public void drawDoor(Graphics g, boolean isOpen)
     {

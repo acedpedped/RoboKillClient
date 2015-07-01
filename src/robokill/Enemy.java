@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  *
  * @version 1.0
  */
-public abstract class Enemy extends JPanel
+public class Enemy extends JPanel
 {
 
 	protected int xPos;
@@ -24,6 +24,7 @@ public abstract class Enemy extends JPanel
     protected double dir;
     protected double degDif;
     protected int health;
+    protected ArrayList<Image> img = new ArrayList<Image>();
 
 	public static final String sep = File.separator;
 
@@ -31,11 +32,13 @@ public abstract class Enemy extends JPanel
     {
         this.dir = -Math.PI / 2;
         health = 3;
+        Cell cell = new Cell(null, i, j);
+        xPos = cell.getxPos();
+        yPos = cell.getyPos();
     }
 
-	public void move(int x, int y)
+	public void move(Graphics g, int x, int y)
 	{
-        double shib = (Math.atan2((double)x, (double)y) - Math.atan2((double)xPos, (double)yPos));
 
 	}
 

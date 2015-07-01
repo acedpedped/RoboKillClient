@@ -31,6 +31,7 @@ public class Room extends JPanel
 	private boolean isCleaned;
 	//private Robot robot;
 	private String dir;
+    private int l;
 	private ArrayList<Box> boxes = new ArrayList<Box>();
 	private ArrayList<SmallBarrier> barriers = new ArrayList<SmallBarrier>();
 	private ArrayList<Door> doors = new ArrayList<Door>();
@@ -61,10 +62,18 @@ public class Room extends JPanel
 		this.enemies = new ArrayList<Enemy>();
 		this.bullets = new ArrayList<Bullet>();
 
-		this.boxes = boxes;
+        for(int i=0;i<doors.size();i++)
+            this.doors.add(doors.get(i));
+        for(int i=0;i<boxes.size();i++)
+            this.boxes.add(boxes.get(i));
+        for(int i=0;i<barriers.size();i++)
+            this.barriers.add(barriers.get(i));
+        for(int i=0;i<enemies.size();i++)
+            this.enemies.add(enemies.get(i));
+		/*this.boxes = boxes;
 		this.barriers = barriers;
 		this.enemies = enemies;
-		this.doors = doors;
+		this.doors = doors;   */
 
         System.out.print(doors.size());
 
@@ -171,6 +180,10 @@ public class Room extends JPanel
 			int x = barriers.get(i).iCell(), y = barriers.get(i).jCell();
 			cells[x][y] = new Cell(barriers.get(i), x, y);
 		}
+        for(int i = 0; i < enemies.size(); i++)
+        {
+
+        }
         //System.out.print(doors.size());
 
 	}
@@ -186,8 +199,8 @@ public class Room extends JPanel
 	@Override
 	public void paintComponent(Graphics g)
 	{
-        System.out.print(doors.size());
 		super.paintComponent(g);
+        System.out.print(doors.size());
 		Image background = new ImageIcon(new File("").getAbsolutePath() + sep + "res" + sep + "Image" + sep + "image 187.png").getImage();
 		g.drawImage(background, 0, 0, 800, 600, null);
 
@@ -209,6 +222,8 @@ public class Room extends JPanel
 		for (int i = 0; i < doors.size(); i++)
 		{
             //System.out.print(doors.get(i).iCell());
+            if(l == 100)
+                isFin = true;
 			doors.get(i).drawDoor(g, isFin);
 		}
 		robot.move(up, down, left, right);
@@ -232,19 +247,24 @@ public class Room extends JPanel
 				Image bul = ImageTool.rotate(b.getImg(), b.getAngle());
 				g.drawImage(bul, b.getX() - bul.getWidth(null) / 2, b.getY() - bul.getHeight(null) / 2, bul.getWidth(null), bul.getHeight(null), null);
 				b.move();
+
 			}
 		}
 
+        l++;
+
 		for (Enemy e : enemies)
 		{
-			e.move(robot.getxPos(), robot.getyPos());
-			g.drawImage(e.getImage(), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
-            g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
+            System.out.print(e.getxPos() + " ");
+            System.out.println(e.getyPos() + " ");
+			e.move(g, robot.getxPos(), robot.getyPos());
+			//g.drawImage(e.getImage(), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
+            //g.drawImage(ImageTool.rotate(e.getImage(), e.degDif()), e.getxPos(), e.getyPos(), e.getImage().getWidth(null), e.getImage().getHeight(null), null);
 		}
 
 		try
 		{
-			Thread.sleep(8);
+			Thread.sleep(15);
 		}
 		catch (InterruptedException e)
 		{
