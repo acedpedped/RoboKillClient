@@ -137,7 +137,7 @@ public abstract class Weapon implements Runnable
 
 	public void addBullet(double angle)
 	{
-		getRoom().addBullet(new Bullet(damage, getRoom().getRobot().getxPos(), getRoom().getRobot().getyPos(), angle, getFireImage()));
+		getRoom().addBullet(new Bullet(damage, getRoom().getRobot().getxPos(), getRoom().getRobot().getyPos(), angle, getFireImage(),true));
 
 	}
 }

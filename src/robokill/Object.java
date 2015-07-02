@@ -14,6 +14,7 @@ public abstract class Object
 {
 	protected Image img;
     protected int i, j;
+    protected Cell cell;
     protected Rectangle rect;
 
 	public Object(Image img, int i, int j)
@@ -26,6 +27,18 @@ public abstract class Object
 
 	}
 
+    public int getWidth()
+    {
+        return img.getWidth(null);
+    }
+    public int getHeight()
+    {
+        return img.getHeight(null);
+    }
+     public Cell getCell()
+     {
+         return cell;
+     }
     /**
      *
      * @return the image of Object

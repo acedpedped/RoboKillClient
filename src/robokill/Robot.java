@@ -22,6 +22,7 @@ public class Robot extends JPanel
 	private int health = 100;
     private int width, height;
 	private int curImg;
+    private boolean sheild;
     private Rectangle rect;
 	private double headDeg = 90;
 	private double direction = 90;
@@ -36,7 +37,16 @@ public class Robot extends JPanel
 	{
 		this.guns = guns;
 	}
-	
+
+    public boolean hasSheild()
+    {
+        return sheild;
+    }
+
+    public void setSheild(boolean sheild)
+    {
+        sheild = this.sheild;
+    }
 	public void addGun(Weapon w)
 	{
 		guns.add(w);

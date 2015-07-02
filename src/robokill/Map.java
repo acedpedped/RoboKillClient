@@ -19,7 +19,7 @@ public class Map
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	ArrayList<Door> doors = new ArrayList<Door>();
 
-	protected ArrayList<Room> rooms = new ArrayList<Room>();
+	public static ArrayList<Room> rooms = new ArrayList<Room>();
 	
 	public static Robot robot;
 	public static Room curRoom;
@@ -39,8 +39,8 @@ public class Map
 //		System.err.println(curRoom.getEnemies().size());
 
 		robot.addGun(new LightBlaster(curRoom));
-//		robot.addGun(new HeavyBlaster(curRoom));
-//		robot.addGun(new HeavyShotgun(curRoom));
+		robot.addGun(new HeavyBlaster(curRoom));
+		robot.addGun(new HeavyShotgun(curRoom));
 		
 		Robokill.frame.add(curRoom);
 		Robokill.frame.repaint();
@@ -67,8 +67,15 @@ public class Map
 		enemies.add(new SmallEnemy(8, 1));
 		enemies.add(new BigEnemy(1, 2));
 		enemies.add(new SmallEnemy(6, 6));
+        boxes.add(new Box(0, 5, 8));
+        boxes.add(new Box(1, 6, 7));
+        boxes.add(new Box(3, 5, 7));
+        barriers.add(new SmallBarrier(0, 6, 6));
+        barriers.add(new SmallBarrier(0, 5, 6));
+        barriers.add(new SmallBarrier(0, 6, 5));
+
         doors.add(new Door(true, false, false, false, 1));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(0,boxes, barriers, enemies, doors));
 		//Robokill.frame.add(rooms.get(0));
 		doors.clear();
 
@@ -79,7 +86,7 @@ public class Map
 		boxes.add(new Box(3, 3, 4));
 //		doors.add(new Door(true, false, false, false, 1, 2));
 //		doors.add(new Door(false, false, true, false, 0, 1));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(1,boxes, barriers, enemies, doors));
 		doors.clear();
 		boxes.clear();
 
@@ -93,7 +100,7 @@ public class Map
 		barriers.add(new SmallBarrier(3, 10, 8));
 //		doors.add(new Door(false, true, false, false, 2, 8));
 //		doors.add(new Door(false, false, false, true, 3, 2));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(2,boxes, barriers, enemies, doors));
 		doors.clear();
 		boxes.clear();
 		barriers.clear();
@@ -110,7 +117,7 @@ public class Map
 		barriers.add(new SmallBarrier(2, 9, 3));
 //		doors.add(new Door(false, true, false, false, 2, 3));
 //		doors.add(new Door(false, false, false, true, 3, 4));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(3,boxes, barriers, enemies, doors));
 		//System.out.print(rooms.get(3).getBox().size());
 		boxes.clear();
 		doors.clear();
@@ -131,7 +138,7 @@ public class Map
 		doors.add(new Door(false, false, true, false, 6));
 		doors.add(new Door(false, false, false, true, 5));
 		doors.add(new Door(false, true, false, false, 3));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(4,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -150,7 +157,7 @@ public class Map
 		boxes.add(new Box(3, 3, 3));
 		boxes.add(new Box(3, 5, 7));
 //		doors.add(new Door(false, true, false, false, 4, 5));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(5,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -173,7 +180,7 @@ public class Map
 		boxes.add(new Box(3, 3, 3));
 		boxes.add(new Box(3, 3, 7));
 //		doors.add(new Door(true, false, false, false, 4, 6));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(6,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -192,7 +199,7 @@ public class Map
 		boxes.add(new Box(0, 8, 12));
 		boxes.add(new Box(0, 5, 10));
 //		doors.add(new Door(false, false, true, false, 7, 4));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(7,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -215,7 +222,7 @@ public class Map
 		boxes.add(new Box(0, 8, 3));
 		boxes.add(new Box(0, 5, 4));
 //		doors.add(new Door(false, false, true, false, 7, 4));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(8,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -239,7 +246,7 @@ public class Map
 		boxes.add(new Box(0, 5, 1));
 //		doors.add(new Door(false, false, false, true, 2, 8));
 //		doors.add(new Door(true, false, false, true, 8, 9));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(9,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -264,7 +271,7 @@ public class Map
 //		doors.add(new Door(false, false, true, false, 9, 10));
 //		doors.add(new Door(true, false, false, false, 9, 11));
 //		doors.add(new Door(false, true, false, false, 9, 8));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(10,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -287,7 +294,7 @@ public class Map
 		boxes.add(new Box(2, 2, 7));
 		boxes.add(new Box(1, 5, 5));
 //		doors.add(new Door(false, false, false, true, 9, 10));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(11,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
@@ -309,7 +316,7 @@ public class Map
 		boxes.add(new Box(2, 2, 7));
 		boxes.add(new Box(1, 5, 5));
 //		doors.add(new Door(false, false, true, false, 9, 11));
-		rooms.add(new Room(boxes, barriers, enemies, doors));
+		rooms.add(new Room(12,boxes, barriers, enemies, doors));
 		boxes.clear();
 		doors.clear();
 		barriers.clear();
